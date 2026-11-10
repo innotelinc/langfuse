@@ -110,7 +110,7 @@ safe-outputs:
   # Fine-grained PAT (contents read, issues RW on this repo only) from the
   # github-agent-workflows environment. This workflow never opens or writes
   # to pull requests — every run's output is a single issue.
-  github-token: ${{ secrets.GH_AW_CI_ANALYST_TOKEN }}
+  github-token: ${{ secrets.GH_AW_CI_ANALYST_TOKEN || secrets.GITHUB_TOKEN }}
   create-issue:
     title-prefix: "CI Runtime Report: "
     labels: [ci-performance]

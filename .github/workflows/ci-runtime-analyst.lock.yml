@@ -459,9 +459,9 @@ jobs:
           github.event.pull_request || github.event.issue.pull_request || github.event_name == 'workflow_dispatch' && fromJSON(github.event.inputs.aw_context || '{}').item_type == 'pull_request'
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         env:
-          GH_TOKEN: ${{ secrets.GH_AW_CI_ANALYST_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_AW_CI_ANALYST_TOKEN || secrets.GITHUB_TOKEN }}
         with:
-          github-token: ${{ secrets.GH_AW_CI_ANALYST_TOKEN }}
+          github-token: ${{ secrets.GH_AW_CI_ANALYST_TOKEN || secrets.GITHUB_TOKEN }}
           script: |
             const { setupGlobals } = require('${{ runner.temp }}/gh-aw/actions/setup_globals.cjs');
             setupGlobals(core, github, context, exec, io, getOctokit);
@@ -949,7 +949,7 @@ jobs:
         env:
           GH_AW_SECRET_NAMES: 'CLAUDE_API_KEY,GH_AW_CI_ANALYST_TOKEN,GH_AW_GITHUB_MCP_SERVER_TOKEN,GH_AW_GITHUB_TOKEN,GITHUB_TOKEN'
           SECRET_CLAUDE_API_KEY: ${{ secrets.CLAUDE_API_KEY }}
-          SECRET_GH_AW_CI_ANALYST_TOKEN: ${{ secrets.GH_AW_CI_ANALYST_TOKEN }}
+          SECRET_GH_AW_CI_ANALYST_TOKEN: ${{ secrets.GH_AW_CI_ANALYST_TOKEN || secrets.GITHUB_TOKEN }}
           SECRET_GH_AW_GITHUB_MCP_SERVER_TOKEN: ${{ secrets.GH_AW_GITHUB_MCP_SERVER_TOKEN }}
           SECRET_GH_AW_GITHUB_TOKEN: ${{ secrets.GH_AW_GITHUB_TOKEN }}
           SECRET_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -1212,7 +1212,7 @@ jobs:
           GH_AW_AMBIENT_CONTEXT: ${{ needs.agent.outputs.ambient_context }}
           GH_AW_WORKFLOW_ID: "ci-runtime-analyst"
         with:
-          github-token: ${{ secrets.GH_AW_CI_ANALYST_TOKEN }}
+          github-token: ${{ secrets.GH_AW_CI_ANALYST_TOKEN || secrets.GITHUB_TOKEN }}
           script: |
             const { setupGlobals } = require('${{ runner.temp }}/gh-aw/actions/setup_globals.cjs');
             setupGlobals(core, github, context, exec, io, getOctokit);
@@ -1229,7 +1229,7 @@ jobs:
           GH_AW_DETECTION_CONCLUSION: ${{ needs.detection.outputs.detection_conclusion }}
           GH_AW_DETECTION_REASON: ${{ needs.detection.outputs.detection_reason }}
         with:
-          github-token: ${{ secrets.GH_AW_CI_ANALYST_TOKEN }}
+          github-token: ${{ secrets.GH_AW_CI_ANALYST_TOKEN || secrets.GITHUB_TOKEN }}
           script: |
             const { setupGlobals } = require('${{ runner.temp }}/gh-aw/actions/setup_globals.cjs');
             setupGlobals(core, github, context, exec, io, getOctokit);
@@ -1244,7 +1244,7 @@ jobs:
           GH_AW_WORKFLOW_NAME: "Weekly CI runtime analyst"
           GH_AW_WORKFLOW_SOURCE_URL: "${{ github.server_url }}/${{ github.repository }}/blob/${{ github.ref_name }}/.github/workflows/ci-runtime-analyst.md"
         with:
-          github-token: ${{ secrets.GH_AW_CI_ANALYST_TOKEN }}
+          github-token: ${{ secrets.GH_AW_CI_ANALYST_TOKEN || secrets.GITHUB_TOKEN }}
           script: |
             const { setupGlobals } = require('${{ runner.temp }}/gh-aw/actions/setup_globals.cjs');
             setupGlobals(core, github, context, exec, io, getOctokit);
@@ -1259,7 +1259,7 @@ jobs:
           GH_AW_WORKFLOW_NAME: "Weekly CI runtime analyst"
           GH_AW_WORKFLOW_SOURCE_URL: "${{ github.server_url }}/${{ github.repository }}/blob/${{ github.ref_name }}/.github/workflows/ci-runtime-analyst.md"
         with:
-          github-token: ${{ secrets.GH_AW_CI_ANALYST_TOKEN }}
+          github-token: ${{ secrets.GH_AW_CI_ANALYST_TOKEN || secrets.GITHUB_TOKEN }}
           script: |
             const { setupGlobals } = require('${{ runner.temp }}/gh-aw/actions/setup_globals.cjs');
             setupGlobals(core, github, context, exec, io, getOctokit);
@@ -1310,7 +1310,7 @@ jobs:
           GH_AW_MISSING_DATA_REPORT_AS_FAILURE: "true"
           GH_AW_TIMEOUT_MINUTES: "90"
         with:
-          github-token: ${{ secrets.GH_AW_CI_ANALYST_TOKEN }}
+          github-token: ${{ secrets.GH_AW_CI_ANALYST_TOKEN || secrets.GITHUB_TOKEN }}
           script: |
             const { setupGlobals } = require('${{ runner.temp }}/gh-aw/actions/setup_globals.cjs');
             setupGlobals(core, github, context, exec, io, getOctokit);
@@ -1327,7 +1327,7 @@ jobs:
           GH_AW_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           GH_AW_REPORT_FAILED_JOBS: "true"
         with:
-          github-token: ${{ secrets.GH_AW_CI_ANALYST_TOKEN }}
+          github-token: ${{ secrets.GH_AW_CI_ANALYST_TOKEN || secrets.GITHUB_TOKEN }}
           script: |
             const { setupGlobals } = require('${{ runner.temp }}/gh-aw/actions/setup_globals.cjs');
             setupGlobals(core, github, context, exec, io, getOctokit);
@@ -1756,7 +1756,7 @@ jobs:
           GITHUB_API_URL: ${{ github.api_url }}
           GH_AW_SAFE_OUTPUTS_HANDLER_CONFIG: "{\"create_issue\":{\"assignees\":[\"wochinge\"],\"labels\":[\"ci-performance\"],\"max\":1,\"title_prefix\":\"CI Runtime Report: \"},\"create_report_incomplete_issue\":{},\"missing_data\":{},\"missing_tool\":{},\"noop\":{\"max\":1,\"report-as-issue\":\"false\"},\"report_incomplete\":{}}"
         with:
-          github-token: ${{ secrets.GH_AW_CI_ANALYST_TOKEN }}
+          github-token: ${{ secrets.GH_AW_CI_ANALYST_TOKEN || secrets.GITHUB_TOKEN }}
           script: |
             const { setupGlobals } = require('${{ runner.temp }}/gh-aw/actions/setup_globals.cjs');
             setupGlobals(core, github, context, exec, io, getOctokit);
