@@ -29,6 +29,10 @@ jobs:
           # or you can sign up for free at https://snyk.io/login
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         run: |
+          if [ -z "${SNYK_TOKEN}" ]; then
+            echo "::notice::SNYK_TOKEN is not configured for this repository; skipping the container scan."
+            exit 0
+          fi
           snyk container test langfuse/langfuse-worker \
             --file=worker/Dockerfile \
             --sarif-file-output=snyk.sarif
@@ -48,7 +52,8 @@ jobs:
           fi
       - name: Upload result to GitHub Code Scanning
         uses: github/codeql-action/upload-sarif@e4fba868fa4b1b91e1fdab776edc8cfbe6e9fb81 # v4.37.3
-        if: always()
+        # No scan result means no SARIF; uploading a missing path fails the job.
+        if: always() && hashFiles('snyk.sarif') != ''
         with:
           sarif_file: snyk.sarif
           category: snyk-container-worker

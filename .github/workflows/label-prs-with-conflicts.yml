@@ -23,7 +23,10 @@ jobs:
           # The token should only have the following permissions:
           # - Issues: read/write
           # - Pull requests: read-only.
-          GH_TOKEN: ${{ secrets.PR_LABELER_TOKEN }}
+          # PR_LABELER_TOKEN is optional: the workflow-scoped token can read
+          # pull requests and write issue labels, so the labeler works without
+          # maintaining a separate PAT.
+          GH_TOKEN: ${{ secrets.PR_LABELER_TOKEN || secrets.GITHUB_TOKEN }}
           REPO: ${{ github.repository }}
           EVENT_NAME: ${{ github.event_name }}
           LABEL_NAME: has-conflicts
