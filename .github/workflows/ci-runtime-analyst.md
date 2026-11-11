@@ -12,6 +12,9 @@ permissions:
   contents: read
   actions: read
   pull-requests: read
+  # Organization-billed Copilot inference through the built-in Actions token:
+  # no stored model key is needed, so this fork runs without CLAUDE_API_KEY.
+  copilot-requests: write
 
 # Repo environment holding this agent's secrets (CLAUDE_API_KEY,
 # GH_AW_GITHUB_TOKEN), isolating them from ordinary CI jobs.
@@ -20,17 +23,12 @@ environment: github-agent-workflows
 checkout:
   fetch-depth: 0
 
-# opus 5 at medium reasoning effort: this workflow does multi-day timing
-# analysis and root-cause investigation, which benefits from the deeper
-# model; medium effort balances thinking depth against the AI-credit budget
-# above. Syntax per the model-alias spec: <model>?effort=<low|medium|high>.
-model: claude-opus-5?effort=medium
-
+# Runs on Copilot through the Actions token (copilot-requests: write above),
+# organization-billed, so the deeper-model budget question is the engine's
+# rather than a model alias's. This workflow does multi-day timing analysis
+# and root-cause investigation, so it leans on the AI-credit cap below.
 engine:
-  id: claude
-  max-turns: 120
-  env:
-    ANTHROPIC_API_KEY: ${{ secrets.CLAUDE_API_KEY }}
+  id: copilot
 
 # Bumped from 60: with the Actions MCP tool actually working (rather than
 # being blocked by a secrecy-filter bug), a full weekly analysis run now
