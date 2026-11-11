@@ -31,6 +31,11 @@ concurrency:
 checkout:
   fetch-depth: 0
 
+# `auto` resolves through the Copilot alias table to a model this account
+# answers with 400 "The requested model is not supported", so pin one that the
+# Copilot plan serves directly.
+model: gpt-4.1
+
 engine:
   id: copilot
   env:

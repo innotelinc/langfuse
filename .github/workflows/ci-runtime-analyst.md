@@ -27,6 +27,11 @@ checkout:
 # organization-billed, so the deeper-model budget question is the engine's
 # rather than a model alias's. This workflow does multi-day timing analysis
 # and root-cause investigation, so it leans on the AI-credit cap below.
+# `auto` resolves through the Copilot alias table to a model this account
+# answers with 400 "The requested model is not supported", so pin one the
+# Copilot plan serves directly.
+model: gpt-4.1
+
 engine:
   id: copilot
 
