@@ -17,7 +17,7 @@ on:
 permissions:
   contents: read
   pull-requests: read
-  vulnerability-alerts: read
+  security-events: read
 
 environment: github-agent-workflows
 
