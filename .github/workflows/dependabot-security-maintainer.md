@@ -70,18 +70,17 @@ steps:
 
   - name: Fetch open npm Dependabot alerts
     env:
-      GH_TOKEN: ${{ github.token }}
+      GH_TOKEN: ${{ secrets.DEPENDABOT_ALERTS_TOKEN || github.token }}
       ALERTS_PATH: /tmp/gh-aw/agent/dependabot-alerts.json
       UNAVAILABLE: /tmp/gh-aw/agent/dependabot-alerts-unavailable
     run: |
       set -euo pipefail
       mkdir -p "$(dirname "$ALERTS_PATH")"
-      # Reading Dependabot alerts needs the "Dependabot alerts: read" permission,
-      # which the built-in Actions token carries here through the
-      # `security-events: read` workflow permission above. Keeping that on the
-      # job token avoids storing a long-lived PAT with far wider scopes just to
-      # read one read-only feed. If a future runner drops that permission the
-      # step says so instead of pretending the feed was empty.
+      # The Dependabot alerts endpoint serves only a PAT or GitHub App token with
+      # "Dependabot alerts: read": the built-in Actions token gets a 403 here even
+      # with `security-events: read` granted, which the log of run 43142880603
+      # confirms. DEPENDABOT_ALERTS_TOKEN covers that; without it the run says so
+      # instead of pretending the feed was empty, and remediates nothing.
       if gh api --method GET --paginate --slurp \
             -H "Accept: application/vnd.github+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
