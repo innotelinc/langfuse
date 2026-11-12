@@ -195,6 +195,22 @@ instead:
   that file and prints ONLY the handful of fields you actually need, in the
   exact shape shown in the sections below. Let the script's small printed
   output enter your context; let the raw file it read stay out of it.
+- Those dumped result files are often **double-encoded**: the file holds a
+  JSON *string* whose contents are the JSON payload, so one `JSON.parse`
+  yields a string, not an object. Unwrap until you have an object, and never
+  guess a wrapper key:
+  `const fs=require('fs');let v=JSON.parse(fs.readFileSync(F,'utf8'));`
+  `while(typeof v==='string')v=JSON.parse(v);` `console.log(Object.keys(v))`.
+  Print the top-level keys BEFORE writing any filter. A shell step that
+  prints `No Content`, or a `jq` error like `Cannot index string with
+  string` (e.g. from a made-up `.workflow_runs.workflow_runs` path), means
+  the file was still a string — re-run the unwrap above once. Never repeat
+  the same failing `jq` command with a slightly different path; two failed
+  attempts at the same extraction mean stop and inspect the shape.
+- These files are written by the harness, not by the API, so their nesting
+  is whatever the dump tool chose (sometimes `{content: "<json string>"}`).
+  Confirm with `typeof`/`Object.keys` rather than assuming
+  `workflow_runs` sits at the top level.
   `list_workflow_runs`'s `event`/`branch` filter parameters have returned
   stale/cached data before — always fetch unfiltered and filter client-side
   on `event`/`created_at` instead of trusting those filter params.
