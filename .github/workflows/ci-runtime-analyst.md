@@ -30,7 +30,7 @@ checkout:
 # `auto` resolves through the Copilot alias table to a model this account
 # answers with 400 "The requested model is not supported", so pin one the
 # Copilot plan serves directly.
-model: gpt-5-mini
+model: gpt-4.1
 
 engine:
   id: copilot
