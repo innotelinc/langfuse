@@ -1,0 +1,10 @@
+<svg width="600" height="400" xmlns="http://www.w3.org/2000/svg">
+  <rect width="600" height="400" fill="#fff"/>
+  <text x="300" y="200" font-size="24" text-anchor="middle" fill="#888">No data for 2026-W46</text>
+  <rect x="30" y="30" width="20" height="20" fill="#3987e5"/>
+  <text x="60" y="45" font-size="16" fill="#222">overall incl. wait</text>
+  <rect x="30" y="60" width="20" height="20" fill="#de5a20"/>
+  <text x="60" y="75" font-size="16" fill="#222">overall excl. wait</text>
+  <rect x="30" y="90" width="20" height="20" fill="#8875e0"/>
+  <text x="60" y="105" font-size="16" fill="#222">runner wait</text>
+</svg>

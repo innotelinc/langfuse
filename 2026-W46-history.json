@@ -1,0 +1,14 @@
+{
+  "week": "2026-W46",
+  "days": [],
+  "runs": 0,
+  "perceivedMedianS": null,
+  "executionMedianS": null,
+  "runnerWaitMedianS": null,
+  "buildMedianS": null,
+  "runTestsMedianS": null,
+  "e2eMedianS": null,
+  "slowestTests": [],
+  "slowestFiles": [],
+  "retriedTests": []
+}
